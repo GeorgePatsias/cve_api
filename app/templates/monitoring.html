@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Monitoring | MetaVault</title>
+  {% include 'head.html' %}
+</head>
+
+<body class="sb-nav-fixed">
+  {% include 'topbar.html' %}
+
+  <div id="layoutSidenav">
+    {% include 'navbar.html' %}
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css"
+      rel="stylesheet" />
+
+    <div id="layoutSidenav_content">
+      <main>
+
+        <div class="container-fluid px-4">
+          <h1 class="mt-4">Monitoring</h1>
+          <span id="error_msg">{{ error_message|e }}</span>
+          <hr>
+
+          <div class="row">
+            <div class="col-xl-12">
+              <div class="card mb-4">
+                <div class="card-header pb-3">
+
+
+                  <form action="/monitoring/keyword-tags" method="post">
+
+
+                    <div class="row pt-3">
+
+
+                      <div class="col-3">
+
+                        <select class="form-control form-select" name="monitoring-frequency" required>
+                          <option value="" selected>Select Frequency</option>
+                          <option value="3">Monitor every 3 hours</option>
+                          <option value="6">Monitor every 6 hours</option>
+                          <option value="12">Monitor every 12 hours</option>
+                          <option value="24">Monitor every 24 hours</option>
+                          <option value="48">Monitor every 48 hours</option>
+                          <option value="168">Monitor once a week</option>
+                        </select>
+                      </div>
+
+                      <div class="col">
+
+                        <div class="input-group">
+                          <input class="form-control" placeholder="Enter Keywords..." type="text" data-role="tagsinput"
+                            value="" name="keywords-tags" required />
+                        </div>
+
+                      </div>
+
+
+
+
+                    </div>
+                    <input class="form-control csrf-token" name="csrf_token" value="{{ csrf_token|e }}" readonly>
+                    <br>
+                    <button class="form-control btn btn-success" type="submit">Submit for Monitoring</button>
+                  </form>
+
+
+
+
+                </div>
+
+              </div>
+              <hr>
+            </div>
+          </div>
+
+
+
+
+          <div class="row">
+
+            <div class="col-xl-12">
+
+              <div class="card mb-4 h-100 ">
+                <div class="card-header">
+                  <h5 class="mb-0">
+                    <i class="fa-solid fa-file-contract fa-lg"></i> Keywords Monitoring
+                  </h5>
+                </div>
+
+                <div class="card-body">
+                  <table id="tbl-monitoring" class="display compact" cellspacing="0">
+                    <thead>
+                      <tr>
+                        <th>Keyword</th>
+                        <th>Frequency (Hours)</th>
+                        <th>Created</th>
+                        <th>Edited</th>
+                        <th>Updated</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                  </table>
+
+                </div>
+
+              </div>
+
+
+            </div>
+
+          </div>
+
+
+
+
+
+
+
+
+      </main>
+      {% include 'footer.html' %}
+    </div>
+  </div>
+  {% include 'scripts.html' %}
+  {% include 'datatables.html' %}
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"
+    crossorigin="anonymous"></script>
+  <script src="/static/js/monitoring.js" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

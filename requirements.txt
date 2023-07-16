@@ -1,0 +1,7 @@
+lxml===4.9.1
+flask===2.2.2
+nvdlib===0.7.0
+pymongo===4.3.2
+requests===2.28.1
+apscheduler===3.9.1
+flask-login===0.6.2

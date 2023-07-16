@@ -1,0 +1,66 @@
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    <!-- Navbar Brand-->
+    <a class="navbar-brand ps-3 d-flex flex-wrap align-items-center" href="/dashboard">
+        <img src="/static/img/cve-api-logo.png" alt="" width="35px" height="35px">
+        <span style="font-weight: bold;padding-left: 2px;">M</span>eta<span style="font-weight: bold;">V</span>ault<sup
+            style="font-weight: bold;color:#ee0000;">x</sup>
+    </a>
+    <!-- Sidebar Toggle-->
+    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+            class="fas fa-bars"></i></button>
+
+
+
+    <!-- Navbar Search-->
+    <div class="container-fluid">
+        <form class="d-flex w-50" action="/investigate/search" method="post">
+            <input id="nav-search" class="form-control me-1" type="search"
+                placeholder="Search for a CVE, e.g. CVE-2014-6271" aria-label="Search" value="" name="search-data"
+                required>
+            <button class="btn btn-primary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <input class="form-control csrf-token" name="csrf_token" value="{{ csrf_token|e }}" readonly>
+        </form>
+    </div>
+
+
+
+
+
+
+    <!-- Navbar-->
+    <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+        <li class="nav-item dropdown px-3">
+            <a class="nav-link  position-relative" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <i class="fa-solid fa-bell"></i>
+
+                <span id="notifications" class="badge position-absolute translate-middle rounded-pill bg-danger"
+                    style="margin-left: 5px;">
+
+                </span>
+            </a>
+            <ul id="notificationItems" class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+
+            </ul>
+        </li>
+
+
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <i class="fa-solid fa-user"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                <li>
+                    <a id="resetPass" class="dropdown-item" href="#">Reset Password</a>
+                </li>
+                <li>
+                    <hr class="dropdown-divider" />
+                </li>
+                <li>
+                    <a class="dropdown-item" href="/logout">Logout</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</nav>

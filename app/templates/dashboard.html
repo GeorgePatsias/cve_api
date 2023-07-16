@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Dashboard | MetaVault</title>
+  {% include 'head.html' %}
+</head>
+
+<body class="sb-nav-fixed">
+  {% include 'topbar.html' %}
+
+  <div id="layoutSidenav">
+    {% include 'navbar.html' %}
+
+    <div id="layoutSidenav_content">
+      <main>
+        <div class="container-fluid px-4">
+
+          <div class="row">
+            <div class="col-xl-12">
+              <h1 class="mt-4">Dashboard</h1>
+              <hr>
+            </div>
+          </div>
+
+          <div class="row">
+
+            <div class="col-xl-6">
+              <div class="card mb-4">
+                <div class="card-header">
+                  <div class="row justify-content-end">
+                    <div class="col-6">
+                      <h5 class="mb-0">
+                        <i class="fa-solid fa-bug me-1" aria-hidden="true"></i>
+                        Latest CVEs
+                      </h5>
+                    </div>
+                    <div class="col-6 text-nowrap text-end">
+                      <span class="h5 mb-0">Latest update: </span><span style="font-weight: bold;">{{
+                        cve_creation_date|e
+                        }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <table id="tbl-cves" class="display cell-border compact w-100">
+                    <thead>
+                      <tr>
+                        <th>Severity</th>
+                        <th>CVE ID</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+
+
+            <div class="col-xl-6">
+
+              <div class="card mb-4">
+                <div class="card-header">
+                  <h5 class="mb-0">
+                    <i class="fa-solid fa-chart-column me-1"></i>
+                    Engagements
+                  </h5>
+                </div>
+                <div class="card-body">
+                  <canvas id="audienceChart" class="w-100"></canvas>
+                </div>
+              </div>
+
+            </div>
+
+
+          </div><!-- END Row -->
+
+        </div>
+      </main>
+      {% include 'footer.html' %}
+    </div>
+  </div>
+  {% include 'scripts.html' %}
+  {% include 'datatables.html' %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"
+    integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="/static/js/dashboard.js" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

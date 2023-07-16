@@ -1,0 +1,44 @@
+<div id="layoutSidenav_nav">
+  <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+    <div class="sb-sidenav-menu">
+      <div class="nav">
+        <div class="sb-sidenav-menu-heading">Core</div>
+
+        <a class="nav-link" href="/dashboard">
+          <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt fa-lg me-1" aria-hidden="true"></i></div>
+          Dashboard
+        </a>
+        <a class="nav-link" href="/investigate">
+          <div class="sb-nav-link-icon"><i class="fa-solid fa-fingerprint fa-lg me-1" aria-hidden="true"></i></div>
+          Investigate
+        </a>
+        <a class="nav-link collapsed" href="/monitoring" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
+          aria-expanded="false" aria-controls="collapseLayouts">
+          <div class="sb-nav-link-icon">
+            <i class="fa-solid fa-eye fa-lg me-1" aria-hidden="true"></i>
+          </div>Monitoring
+        </a>
+        <a class="nav-link collapsed" href="/events" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
+          aria-expanded="false" aria-controls="collapseLayouts">
+          <div class="sb-nav-link-icon">
+            <i class="fa-solid fa-bell fa-lg me-1" aria-hidden="true"></i>
+          </div>
+          Events
+        </a>
+        <a class="nav-link" href="/cve-db">
+          <div class="sb-nav-link-icon"><i class="fa-solid fa-database fa-lg me-1" aria-hidden="true"></i></div>CVE DB
+        </a>
+        <div class="sb-sidenav-menu-heading">Management</div>
+        <a class="nav-link" href="/admins">
+          <div class="sb-nav-link-icon"><i class="fa-solid fa-user-astronaut fa-lg me-1" aria-hidden="true"></i></div>
+          Admins
+        </a>
+      </div>
+    </div>
+    <div class="sb-sidenav-footer">
+      <div class="small">Logged in as:</div>
+      <i class="fa-solid fa-circle fa-2xs" style="color:#00FF00"></i> <span id="current-user-id">{{ current_user.id
+        }}</span>
+    </div>
+  </nav>
+</div>

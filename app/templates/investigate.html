@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Investigate | MetaVault</title>
+  {% include 'head.html' %}
+</head>
+
+<body class="sb-nav-fixed">
+  {% include 'topbar.html' %}
+
+  <div id="layoutSidenav">
+    {% include 'navbar.html' %}
+
+    <div id="layoutSidenav_content">
+      <main>
+        <div class="container-fluid px-4">
+
+          <div class="row">
+            <div class="col-xl-12">
+              <h1 class="mt-4">Investigate <i class="fa-solid fa-fingerprint me-1"></i> {{ cve_id|e }}</h1>
+              <span id="error_msg">{{ error_message|e }}</span>
+              <hr>
+            </div>
+          </div>
+
+          <div class="row mb-4">
+            <div class="col-xl-12">
+              <div class="card">
+                <div class="card-header">
+                  <form action="/investigate/search" method="post" autocomplete="on">
+                    <div class="input-group">
+                      <input type="search" class="form-control dropdown-toggle"
+                        placeholder="Search for a CVE, e.g. CVE-2014-6271" id="top-search" name="search-data"
+                        value="{{ cve_id|e }}" required>
+
+                      <button class="input-group-text btn btn-primary" type="submit">Search</button>
+                    </div>
+                    <input class="form-control csrf-token" name="csrf_token" value="{{ csrf_token|e }}" readonly>
+                  </form>
+                </div>
+              </div>
+              <hr>
+            </div>
+          </div> <!-- END ROW -->
+
+
+
+
+
+          <div class="row">
+            <div class="col-xl-4">
+              <div class="card mb-4 h-100">
+                <div class="card-header">
+                  <h5 class="mb-0">
+                    <i class="fa-solid fa-circle-info me-1 text-primary"></i>
+                    Information
+                  </h5>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-striped align-middle table-hover">
+                      <tbody>
+                        <tr>
+                          <th scope="row">CVE ID:</th>
+                          <td>{{ cve_data.cve|e }}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">NVD NIST:</th>
+                          <td style="overflow: hidden;text-overflow: ellipsis;white-space:nowrap;"><a
+                              href="https://nvd.nist.gov/vuln/detail/{{ cve_data.cve|e }}" alt="NIST"
+                              target="_blank">https://nvd.nist.gov/{{ cve_data.cve|e }}</a></td>
+                        </tr>
+                        <tr>
+                          <th scope="row">MITRE:</th>
+                          <td style="overflow: hidden;text-overflow: ellipsis;white-space:nowrap;"><a
+                              href="https://cve.mitre.org/cgi-bin/cvename.cgi?name={{ cve_data.cve|e }}" alt="NIST"
+                              target="_blank">https://cve.mitre.org/{{ cve_data.cve|e }}</a></td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Published Date:</th>
+                          <td>{{ cve_data.publishedDate|e }}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Score:</th>
+                          <td>{{ cve_data.score|e }}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Severity:</th>
+                          <td>
+                            {% if cve_data.severity == "CRITICAL" %}
+                            <span class='text-danger fw-bold bg-dark'>CRITICAL</span>
+                            {% elif cve_data.severity == "HIGH" %}
+                            <span class="text-danger fw-bold">HIGH</span>
+                            {% elif cve_data.severity == "MEDIUM" %}
+                            <span class="text-warning fw-bold">MEDIUM</span>
+                            {% elif cve_data.severity == "LOW" %}
+                            <span class="text-primary fw-bold">LOW</span>
+                            {% else %}
+                            {{cve_data.severity|e}}
+                            {% endif %}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="row">CVSSv2 Score:</th>
+                          <td>{{ cve_data.cvssv2_base_score|e }}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">CVSSv2 Severity:</th>
+                          <td>
+                            {% if cve_data.cvssv2_severity == "CRITICAL" %}
+                            <span class='text-danger fw-bold bg-dark'>CRITICAL</span>
+                            {% elif cve_data.cvssv2_severity == "HIGH" %}
+                            <span class="text-danger fw-bold">HIGH</span>
+                            {% elif cve_data.cvssv2_severity == "MEDIUM" %}
+                            <span class="text-warning fw-bold">MEDIUM</span>
+                            {% elif cve_data.cvssv2_severity == "LOW" %}
+                            <span class="text-primary fw-bold">LOW</span>
+                            {% else %}
+                            {{cve_data.cvssv2_severity|e}}
+                            {% endif %}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="row">CVSSv3 Score:</th>
+                          <td>{{ cve_data.cvssv3_base_score|e }}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">CVSSv3 Severity:</th>
+                          <td>
+                            {% if cve_data.cvssv3_base_severity == "CRITICAL" %}
+                            <span class='text-danger fw-bold bg-dark'>CRITICAL</span>
+                            {% elif cve_data.cvssv3_base_severity == "HIGH" %}
+                            <span class="text-danger fw-bold">HIGH</span>
+                            {% elif cve_data.cvssv3_base_severity == "MEDIUM" %}
+                            <span class="text-warning fw-bold">MEDIUM</span>
+                            {% elif cve_data.cvssv3_base_severity == "LOW" %}
+                            <span class="text-primary fw-bold">LOW</span>
+                            {% else %}
+                            {{cve_data.cvssv3_base_severity|e}}
+                            {% endif %}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="row">EPSS Score:</th>
+                          <td>{{ cve_data.epss_score|e }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+            <div class="col-xl-4">
+              <div class="card mb-4 h-100">
+                <div class="card-header">
+                  <h5 class="mb-0">
+                    <i class="fa-solid fa-newspaper me-1"></i>
+                    Description
+                  </h5>
+                </div>
+                <div class="card-body">
+                  {% if cve_data.description %}
+                  <p style="text-align: justify;">
+                    {{ cve_data.description }}
+                  </p>
+                  {% else %}
+                  <h6 class="text-center">No data to display yet...</h6>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col-xl-4">
+              <div class="card mb-4 h-100">
+                <div class="card-header">
+                  <h5 class="mb-0">
+                    <i class="fa-solid fa-fire me-1" style='color: red'></i>
+                    CWEs
+                  </h5>
+                </div>
+                <div class="card-body">
+                  {% if cve_data.cwes %}
+                  <div class="table-responsive">
+                    <table id="cwe-table" class="table table-striped align-middle table-hover">
+                      <thead>
+                        <tr>
+                          <th scope="col" class="text-nowrap">CWE ID</th>
+                          <th scope="col">Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for cwe in cve_data.cwes %}
+                        <tr>
+                          <td class="text-nowrap"><a href="{{ cwe.cwe_url|e }}" target="_blank">{{ cwe.cwe_id|e or
+                              cwe.value|e }}</a></td>
+                          <td>{{ cwe.cwe_description|e or "Pending" }}</td>
+                        </tr>
+
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                  {% else %}
+                  <h6 class="text-center">No data to display yet...</h6>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <!-- END ROW -->
+
+
+
+
+
+
+
+          <div class="row mt-4">
+
+            <div class="col-xl-4">
+              <div class="card mb-4 h-100">
+                <div class="card-header">
+                  <h5 class="mb-0">
+                    <i class="fa-brands fa-twitter me-1" style="color: #00acee;"></i>
+                    Twitter
+                  </h5>
+                </div>
+                <div class="card-body">
+                  {% if cve_data.tweets %}
+                  <div class="scrollable" style="max-height: 522px !important;">
+                    {% for tweet in cve_data.tweets %}
+                    <div class="card text-white bg-dark mb-4">
+                      <div class="card-header" style="border-color: white;">
+
+                        <div class="row align-items-center">
+                          <div class="col-sm-1">
+                            <a href="https://twitter.com/{{ tweet.twitter_user_handle|e }}" target="_blank"
+                              style="color: #00acee;">
+                              <img src="{{ tweet.twitter_user_profile_pic|e }}" width="35px" height="35px">
+                            </a>
+                          </div>
+                          <div class="col-xl-10">
+                            <a href="https://twitter.com/{{ tweet.twitter_user_handle|e }}" target="_blank"
+                              style="color: #00acee;">{{
+                              tweet.twitter_user_name|e }}</a>
+                            <span style="font-size: 12px;">@{{ tweet.twitter_user_handle|e }}</span>
+                          </div>
+                          <div class="col-sm-1">
+                            <a href="https://twitter.com/{{ tweet.twitter_user_handle|e }}/status/{{ tweet.tweet_id|e }}"
+                              target="_blank" style="color: #00acee;">
+                              <i class="fa-brands fa-twitter" style="color: #00acee;"></i>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card-body">
+                        {{ tweet.tweet_text|e }}
+                      </div>
+                      <div class="card-footer">
+                        <div class="row">
+                          <div class="col-auto">
+                            <i class="fa-solid fa-heart"></i> {{ tweet.likes|e }}
+                          </div>
+                          <div class="col-auto">
+                            <i class="fa-solid fa-retweet"></i> {{ tweet.retweets|e }}
+                          </div>
+                          <div class="col" align="right">
+                            <i class="fa-solid fa-calendar-day"></i> {{ tweet.created_at|e }}
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                    {% endfor %}
+                  </div>
+                  {% else %}
+                  <h6 class="text-center">No data to display yet...</h6>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col-xl-8">
+              <div class="card mb-4 h-100">
+                <div class="card-header">
+                  <h5 class="mb-0">
+                    <i class="fa-solid fa-chart-line me-1" style="color: #00acee;"></i>
+                    Twitter Traffic
+                  </h5>
+                </div>
+                <div class="card-body">
+                  <canvas id="twitterAreaChart"></canvas>
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+
+          </div> <!-- END ROW -->
+
+
+
+
+
+
+
+
+
+          <div class="row mt-4">
+            <div class="col-xl-6">
+              <div class="card mb-4 h-100">
+                <div class="card-header">
+                  <h5 class="mb-0">
+                    <i class="fa-brands fa-github me-1" style="color:#171515;"></i>
+                    Github
+                  </h5>
+                </div>
+                <div class="card-body">
+
+                  {% if cve_data.github_repos %}
+                  <div class="scrollable">
+                    {% for github in cve_data.github_repos %}
+                    <div class="card text-white bg-dark mb-4">
+                      <div class="card-header" style="border-color: white;">
+                        <div class="row align-items-center">
+                          <div class="col-auto">
+                            <a href="https://github.com/{{ github.owner|e }}" target="_blank" style="color: #00acee;">
+                              {% if github.owner_logo %}
+                              <img src="{{ github.owner_logo|e }}" width="35px" height="35px">
+                              {% else %}
+                              <img src="/static/images/n-a.png" width="35px" height="35px">
+                              {% endif %}
+                              {{ github.owner|e }}
+                            </a>
+                          </div>
+                          <div class="col-auto">
+                            <b>Title:</b> {{ github.name|e }}
+                          </div>
+                          <div class="col" align="right" style="white-space: nowrap;">
+                            <b>Created:</b> {{github.created|e }} <a href="{{ github.url|e }}" target="_blank"
+                              style="color: #00acee;">
+                              <i class="fa-solid fa-arrow-up-right-from-square fa-lg"></i>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+
+
+
+
+                      <div class="card-body">
+
+                        <div class="table-responsive">
+                          <table class="table table-hover table-dark table-sm">
+                            <tbody>
+                              <tr>
+                                <th scope="row" style="white-space: nowrap;"><i class="fa-regular fa-file-lines"></i>
+                                  Description:</th>
+                                <td style="text-align: justify;">{{ github.description or "-" }}</td>
+                              </tr>
+                              <tr>
+                                <th scope="row" style="white-space: nowrap;"><i class="fa-solid fa-star"></i> Stars:
+                                </th>
+                                <td>{{ github.stars or "0" }}</td>
+                              </tr>
+                              <tr>
+                                <th scope="row" style="white-space: nowrap;"><i class="fa-solid fa-code-fork"></i>
+                                  Forks:</th>
+                                <td>{{ github.forks or "0" }}</td>
+                              </tr>
+                              <tr>
+                                <th scope="row" style="white-space: nowrap;"><i class="fa-solid fa-eye"></i> Watchers:
+                                </th>
+                                <td>{{ github.watchers or "0" }}</td>
+                              </tr>
+
+                              <tr>
+                                <th scope="row" style="white-space: nowrap;"><i class="fa-solid fa-code"></i> Language:
+                                </th>
+                                <td>{{ github.language or "-"}}</td>
+                              </tr>
+                              <tr>
+                                <th scope="row" style="white-space: nowrap;"> <i
+                                    class="fa-regular fa-hourglass-half"></i> Updated:</th>
+                                <td>{{ github.updated or "-" }}</td>
+                              </tr>
+                              <tr>
+                                <th scope="row" style="white-space: nowrap;"><i class="fa-solid fa-bookmark"></i>
+                                  Topics:</th>
+                                <td>
+                                  {% for topic in github.topics %}
+                                  {{ topic}},
+                                  {% endfor %}
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+
+                      </div>
+                    </div>
+                    {% endfor %}
+                  </div>
+                  {% else %}
+                  <h6 class="text-center">No data to display yet...</h6>
+                  {% endif %}
+
+                </div>
+
+              </div>
+            </div>
+
+
+            <div class="col-xl-6">
+              <div class="card mb-4 h-100">
+                <div class="card-header">
+                  <h5 class="mb-0">
+                    <i class="fa-brands fa-reddit me-1" style="color:#FF8b60;"></i>
+                    Reddit
+                  </h5>
+                </div>
+                <div class="card-body">
+                  {% if cve_data.reddit_posts %}
+                  <div class="scrollable">
+                    {% for reddit in cve_data.reddit_posts %}
+                    <div class="card bg-dark text-white mb-4">
+
+
+
+
+
+                      <div class="card-header" style="border-color: white;">
+                        <div class="row align-items-center">
+                          <div class="col-auto">
+                            <a href="https://reddit.com/user/{{ reddit.author|e }}" target="_blank"
+                              style="color: #00acee;">
+                              {% if reddit.thumbnail and reddit.thumbnail not in ['default', 'self'] %}
+                              <img src="{{ reddit.thumbnail }}" width="35px" height="35px">
+                              {% else %}
+                              <img src="/static/img/n-a.png" width="35px" height="35px">
+                              {% endif %}
+                              {{ reddit.author|e }}
+                            </a>
+                          </div>
+                          <div class="col-auto">
+                            <b>Title:</b> {{ reddit.title|e }}
+                          </div>
+                          <div class="col" align="right" style="white-space: nowrap;">
+                            <b>Created:</b> {{reddit.created|e }} <a href="{{ reddit.permalink|e }}" target="_blank"
+                              style="color: #00acee;">
+                              <i class="fa-solid fa-arrow-up-right-from-square fa-lg"></i>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+
+
+                      <div class="card-body">
+                        <div class="table-responsive">
+                          <table class="table table-hover table-dark table-sm">
+                            <tbody>
+                              <tr>
+                                <th scope="row" style="white-space: nowrap;"><i class="fa-regular fa-file-lines"></i>
+                                  Description:</th>
+                                <td style="text-align: justify;">{{ reddit.text|e }}</td>
+                              </tr>
+                              <tr>
+                                <th scope="row" style="white-space: nowrap;"><i class="fa-brands fa-reddit-alien"></i>
+                                  Subreddit:</th>
+                                <td>
+                                  <a href="https://reddit.com/r/{{ reddit.subreddit|e }}" target="_blank"
+                                    style="color: #00acee;">/{{ reddit.subreddit|e }}</a>
+                                </td>
+                              </tr>
+                              <tr>
+                                <th scope="row" style="white-space: nowrap;"><i class="fa-regular fa-comment-dots"></i>
+                                  Comments:</th>
+                                <td>{{ reddit.num_comments|e }}</td>
+                              </tr>
+                              <tr>
+                                <th scope="row" style="white-space: nowrap;"><i class="fa-solid fa-arrow-up"></i>
+                                  Upvotes:</th>
+                                <td>{{ reddit.upvotes|e }}</td>
+                              </tr>
+                              <tr>
+                                <th scope="row" style="white-space: nowrap;"><i class="fa-solid fa-users"></i>
+                                  Subscribers:</th>
+                                <td>
+                                  {{ reddit.subreddit_subscribers|e }}
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+
+                      </div>
+                    </div>
+                    {% endfor %}
+                  </div>
+                  {% else %}
+                  <h6 class="text-center">No data to display yet...</h6>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+      </main>
+      {% include 'footer.html' %}
+    </div>
+  </div>
+  {% include 'scripts.html' %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js" crossorigin="anonymous"></script>
+  <script src="/static/js/investigate.js" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

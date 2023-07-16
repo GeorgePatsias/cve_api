@@ -1,0 +1,60 @@
+version: '3.3'
+
+services:
+  cve_app:
+     image: cve_app
+     container_name: cve_app
+     depends_on:
+       - "mongodb"
+     restart: unless-stopped
+     volumes:
+       - app_logs:/home/netadmin/app/logs
+     dns: 1.1.1.1
+     networks:
+       - main_network
+
+  cve_api:
+    image: cve_api
+    container_name: cve_api
+    depends_on:
+      - "mongodb"
+    volumes:
+      - api_logs:/home/netadmin/api/logs
+    dns: 1.1.1.1
+    networks:
+      - main_network
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "127.0.0.1:27017:27017"
+    volumes:
+      - ./mongo_db:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=MkWTWPM8IMnncaX99S0eLR7DztFUhkqhgtylfeOJIOoVM04k6llo66R8B0Ce
+    restart: unless-stopped
+    networks:
+      - main_network
+
+  nginx:
+    image: my_nginx
+    container_name: nginx
+    restart: unless-stopped
+    ports:
+     - 443:443
+    dns: 1.1.1.1
+    volumes:
+     - nginx_logs:/var/log/nginx
+    networks:
+     - main_network
+
+volumes:
+  app_logs:
+  api_logs:
+  nginx_logs:
+
+
+networks:
+  main_network:

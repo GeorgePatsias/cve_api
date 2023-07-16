@@ -1,0 +1,11 @@
+mongo --host localhost:27017 -u root -p MkWTWPM8IMnncaX99S0eLR7DztFUhkqhgtylfeOJIOoVM04k6llo66R8B0Ce
+
+# @app.route('/test', methods=['GET'])
+# def test():
+#     from werkzeug.security import generate_password_hash
+#     from datetime import datetime
+#     mongo_client = mongoClient()
+#     col_admins = mongo_client[MONGO_DB][MONGO_ADMINS_COLLECTION]
+#     col_admins.insert_one({'username': "administrator", 'password': generate_password_hash('Password1!'), 'created_at': datetime.now(), 'last_activity': '', 'locked': 'false'})
+
+#     return '', 200
